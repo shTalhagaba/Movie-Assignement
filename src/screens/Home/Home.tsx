@@ -27,14 +27,12 @@ export interface NavigationProps {
 
 export default function Home(props: NavigationProps) {
   const favouriteList = useSelector (state => state)
-  console.log('favouriteList : ',favouriteList)
   const dispatch = useDispatch()
   const [tab, setTab] = useState<any>(Constants.latest);
   const [loading, setLoading] = useState<boolean>(false);
   const [popularList, setPopularList] = useState<any[]>([]);
   const [latestList, setLatestList] = useState<any>(null);
   const [trendingList, setTrendingList] = useState<any>(null);
-  const [favouriteItems, setFavouriteItems] = useState<any>(null);
 
   const {navigation} = props;
 

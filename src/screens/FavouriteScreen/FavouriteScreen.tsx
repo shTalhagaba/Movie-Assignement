@@ -1,4 +1,3 @@
-import MovieLists from '../../components/Lists/MovieLists';
 import React, { useEffect, useState} from 'react';
 import {
   View,

@@ -60,7 +60,6 @@ export default function DetailPage(props:NavigationProps) {
         url: `https://api.themoviedb.org/3/movie/${id}?api_key=02594f17504d1a82ec172f4a3de468ea&language=en-US&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`,
         method: 'GET',
       });
-      console.log('response getting Data', response?.data);
       setData(response?.data);
       setLoading(false);
     } catch (error) {
@@ -69,7 +68,7 @@ export default function DetailPage(props:NavigationProps) {
     }
   };
   return (
-    <View style={{width:'100%',padding:20,height:'100%'}}>
+    <View style={{width:'100%',padding:20,height:'100%', marginTop: 10}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity
           style={{margin: 10}}

@@ -37,19 +37,12 @@ function favouriteReducer(state = initialState, action) {
       }
 
     case DELETE_FAVOURITE:
-      if(state.favouriteIDs && state.favouriteIDs.length>1){
-        let ids = state.favouriteIDs.filter(item => item === action.payload)
-        let list = state.favouriteList.filter(item => item.id === action.payload)
+        let ids = state.favouriteIDs.filter(item => item != action.payload)
+        let list = state.favouriteList.filter(item => item.id != action.payload)
         return {
           favouriteIDs: ids,
           favouriteList: list
         }
-      }else{
-        return {
-          favouriteIDs: [],
-          favouriteList: []
-        }
-      }
 
     default:
       return state

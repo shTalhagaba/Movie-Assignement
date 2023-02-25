@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import Colors from '../../common/colors/Colors';
-// import ProgressCirzcle from 'react-native-progress-circle';
 import ImagePath from '../../common/images/ImagePath';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useSelector } from 'react-redux';
 
 export interface NavigationProps {
   navigation?: any;
@@ -17,6 +17,7 @@ export interface NavigationProps {
 
 
 function MovieLists(props:NavigationProps) {
+  const favouriteIDs = useSelector(state => state.favouriteIDs)
   const {item} = props;
   return (
     <TouchableOpacity onPress={props.onPress}>
@@ -32,24 +33,10 @@ function MovieLists(props:NavigationProps) {
         <View style={styles.dot} />
         <View style={styles.dot} />
       </TouchableOpacity>
-      {props.favourite && <TouchableOpacity style={{position:'absolute',paddingTop:6,left:10}} onPress={props.onPressFavourite}>
-      <AntDesign name={item.isFavourite ? 'heart' :'hearto'} size={20} color={Colors.white}  />
+      {<TouchableOpacity style={{position:'absolute',paddingTop:6,left:10}} onPress={props.onPressFavourite}>
+      <AntDesign name={favouriteIDs.includes(item.id) ? 'heart' :'hearto'} size={20} color={Colors.white}  />
       </TouchableOpacity> }
       <View style={styles.progressContainer}>
-        {/* <ProgressCircle
-          percent={item.progress}
-          radius={15}
-          borderWidth={3}
-          color={
-            item.progress <= 50
-              ? Colors.white
-              : item.progress <= 80
-              ? Colors.yellow
-              : Colors.green
-          }
-          shadowColor="#999"
-          bgColor={Colors.darkBlue}
-        /> */}
       </View>
       <Text style={styles.progress}>{item.vote_average}</Text>
     </TouchableOpacity>
@@ -61,7 +48,6 @@ const styles = StyleSheet.create({
     width: 130,
     minHeight: 250,
     borderRadius: 10,
-    // margin: 5,
   },
   image: {
     width: 120,
@@ -80,7 +66,6 @@ const styles = StyleSheet.create({
   progressContainer: {
     backgroundColor: Colors.darkBlue,
     position: 'absolute',
-    // bottom: 55,
     top:158,
     left: 10,
     borderRadius: 50,
@@ -89,7 +74,6 @@ const styles = StyleSheet.create({
   progress: {
     position: 'absolute',
     top:165,
-    // bottom: 62,
     left: 19,
     padding: 3,
     color: Colors.white,

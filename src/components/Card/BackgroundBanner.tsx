@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import Colors from '../../common/colors/Colors';
-// import ProgressCircle from 'react-native-progress-circle';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -48,21 +47,6 @@ function BackgroundBanner(props:NavigationProps) {
           <View style={styles.row}>
             <ScrollView horizontal={true}>
               <View style={styles.progressContainer}>
-                {/* <ProgressCircle
-                  percent={22}
-                  radius={17}
-                  borderWidth={3}
-                  color={
-                    Colors.green
-                    // item.progress <= 50
-                    //   ? Colors.white
-                    //   : item.progress <= 80
-                    //   ? Colors.yellow
-                    //   : Colors.green
-                  }
-                  shadowColor="#999"
-                  bgColor={Colors.darkBlue}
-                /> */}
               </View>
               <Text style={styles.progress}>{progress}</Text>
               <Text style={styles.score}>

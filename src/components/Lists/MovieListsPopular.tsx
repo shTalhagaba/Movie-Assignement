@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import Colors from '../../common/colors/Colors';
-// import ProgressCirzcle from 'react-native-progress-circle';
 import ImagePath from '../../common/images/ImagePath';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useSelector } from 'react-redux';
@@ -23,7 +22,6 @@ function MovieListsPopular(props:NavigationProps) {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View style={styles.container}>
-        {/* {item.poster_path? */}
         <Image 
         resizeMode='stretch'
         source={item.poster_path === null ? ImagePath.dummyImg :{uri:'https://www.themoviedb.org/t/p/w1280/'+item.poster_path}} style={styles.image} />

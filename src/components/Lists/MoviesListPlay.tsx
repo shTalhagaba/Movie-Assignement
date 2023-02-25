@@ -3,7 +3,14 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import Colors from '../../common/colors/Colors';
 import ImagePath from '../../common/images/ImagePath';
 
-function MoviesListPlay(props) {
+export interface NavigationProps {
+  navigation?: any;
+  route?: any;
+  item?: any;
+  onPress?: any;
+}
+
+function MoviesListPlay(props:NavigationProps) {
   const {item} = props;
   return (
     <TouchableOpacity onPress={props.onPress}>
