@@ -1,5 +1,5 @@
 import MovieLists from '../../components/Lists/MovieLists';
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Constants from '../../common/contant/Constants';
+import MovieListsPopular from '../../components/Lists/MovieListsPopular';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteFavourite } from '../../redux/favouriteApp'
 
 export interface NavigationProps {
   navigation: any;
@@ -15,13 +18,27 @@ export interface NavigationProps {
 }
 
 export default function FavouriteScreen(props: NavigationProps) {
+  const favouriteList = useSelector(state => state.favouriteList)
+  const dispatch = useDispatch()
   const {navigation} = props;
 
   const [favouriteItems, setFavouriteItems] = useState<any>(
-    props.route.params.latestList,
+    favouriteList ? favouriteList : [] ,
   );
+  const [reload, setReload] = useState<any>(false);
+
+  useEffect(()=>{
+    setFavouriteItems(favouriteList)
+    setReload(!reload)
+  },[favouriteList])
+
+  const handleFavourite = (item: any) => {
+    dispatch(deleteFavourite(item.id))
+  };
+
   return (
     <View style={styles.container}>
+      <View style={{flexDirection:'row',}}>
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.goBack()}>
@@ -31,16 +48,16 @@ export default function FavouriteScreen(props: NavigationProps) {
       <Text style={styles.heading}>
         {Constants.favouriteScreen}
       </Text>
-
+      </View>
       <FlatList
         data={favouriteItems}
-        horizontal
         style={styles.flatlist}
         renderItem={({item, index}) => {
           if (item.isFavourite) {
             return (
-              <MovieLists
+              <MovieListsPopular
                 item={item}
+                onPressFavourite={() => handleFavourite(item)}
                 onPress={() =>
                   navigation.navigate('DetailPage', {
                     id: item.id,

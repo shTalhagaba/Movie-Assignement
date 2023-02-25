@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../common/colors/Colors';
 
 export default StyleSheet.create({
@@ -16,5 +16,6 @@ export default StyleSheet.create({
     width: '100%',
     padding: 20,
     height: '100%',
+    marginTop: Platform.OS === 'ios' ? 15 : 1,
   },
 });

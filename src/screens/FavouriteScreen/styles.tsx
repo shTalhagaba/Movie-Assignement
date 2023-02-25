@@ -7,14 +7,19 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: Colors.white,
+    marginTop: 17,
   },
   backBtn: {
     margin: 10,
+    marginTop: 30,
+    flex: 0.3
   },
   heading: {
-    alignSelf: 'center', 
+    width: '100%',
     fontSize: 22, 
-    color: Colors.black
+    marginTop: 30,
+    color: Colors.black,
+    flex: 0.7
   },
   flatlist:{
     padding: 20

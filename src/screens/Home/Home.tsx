@@ -16,6 +16,9 @@ import MovieLists from '../../components/Lists/MovieLists';
 import Constants from '../../common/contant/Constants';
 import MoviesListPlay from '../../components/Lists/MoviesListPlay';
 import Axios from 'axios';
+import MovieListsPopular from '../../components/Lists/MovieListsPopular';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavourite, deleteFavourite } from '../../redux/favouriteApp'
 
 export interface NavigationProps {
   navigation: any;
@@ -23,6 +26,9 @@ export interface NavigationProps {
 }
 
 export default function Home(props: NavigationProps) {
+  const favouriteList = useSelector (state => state)
+  console.log('favouriteList : ',favouriteList)
+  const dispatch = useDispatch()
   const [tab, setTab] = useState<any>(Constants.latest);
   const [loading, setLoading] = useState<boolean>(false);
   const [popularList, setPopularList] = useState<any[]>([]);
@@ -46,9 +52,11 @@ export default function Home(props: NavigationProps) {
         method: 'GET',
       });
       var temp: any[] = [];
+      if(response?.data?.results && response?.data?.results.length>0){
       response?.data?.results.forEach((item: any) => {
-        temp.push({...item, isFavourite: false});
+            temp.push({...item, isFavourite: false});
       });
+    }
       setPopularList(temp);
       setLoading(false);
     } catch (error) {
@@ -83,7 +91,9 @@ export default function Home(props: NavigationProps) {
         url: `https://api.themoviedb.org/3/trending/all/day?api_key=02594f17504d1a82ec172f4a3de468ea`,
         method: 'GET',
       });
-      setTrendingList(response?.data?.results);
+      if(response?.data?.results && response?.data?.results.length>0){
+        setTrendingList(response?.data?.results);
+      }
       setLoading(false);
     } catch (error) {
       console.log('Error getting TrailerList ', error);
@@ -91,14 +101,19 @@ export default function Home(props: NavigationProps) {
     }
   };
 
+
   const handleFavourite = (item: any, type: String) => {
     let filteredList: any[] = [];
-
     switch (type) {
       case 'popular':
         popularList.forEach((element: any) => {
           if (element.id === item.id) {
-            filteredList.push({...element, isFavourite: !element.isFavourite});
+            if(element.isFavourite){
+              dispatch(deleteFavourite(element.id))
+            }else{
+              dispatch(addFavourite({...element, isFavourite: true}))
+            }            
+          filteredList.push({...element, isFavourite: !element.isFavourite});
           } else {
             filteredList.push(element);
           }
@@ -109,6 +124,11 @@ export default function Home(props: NavigationProps) {
       case 'lastest':
         latestList.forEach((element: any) => {
           if (element.id === item.id) {
+            if(element.isFavourite){
+              dispatch(deleteFavourite(element.id))
+            }else{
+              dispatch(addFavourite({...element, isFavourite: true}))
+            }
             filteredList.push({...element, isFavourite: !element.isFavourite});
           } else {
             filteredList.push(element);
@@ -207,9 +227,8 @@ export default function Home(props: NavigationProps) {
                 <Text style={styles.txt}>{Constants.whatPopular}</Text>
                 <FlatList
                   data={popularList}
-                  horizontal
                   renderItem={({item, index}) => (
-                    <MovieLists
+                    <MovieListsPopular
                       item={item}
                       favourite={true}
                       onPressFavourite={() => handleFavourite(item, 'popular')}
